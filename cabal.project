@@ -1,1 +1,12 @@
 packages: .
+
+source-repository-package
+  type: git
+  location: https://github.com/Tarmean/haskell-product-isomorphic.git
+  tag: 1afd4b733b6a694e4e02236a27a5b269623ad2ec
+
+source-repository-package
+  type: git
+  location: https://github.com/Tarmean/haskell-relational-record.git
+  tag: 38ea01bfcbf4a398845ae58e6c92624d0284df98
+  subdir: relational-query
