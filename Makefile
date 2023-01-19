@@ -2,61 +2,62 @@ PWSH = pwsh
 
 .PHONY: build
 build: build-deps
-	cabal build
+	cabal build -j
 
 .PHONY: build-deps
 build-deps:
-	cabal build --only-dependencies
+	cabal build -j --only-dependencies
 
 .PHONY: test
 test: test-doctest test-original test-hdbc-postgresql test-relational-record
 
 .PHONY: build-doctest
 build-doctest: build
-	cabal build postgresql-pure:test:doctest
+	cabal build -j postgresql-pure:test:doctest
 
 .PHONY: test-doctest
 test-doctest: build-doctest
-	cabal test postgresql-pure:test:doctest
+	cabal test -j postgresql-pure:test:doctest
 
 .PHONY: build-original
 build-original: build
-	cabal build postgresql-pure:test:original
+	cabal build -j postgresql-pure:test:original
 
 .PHONY: test-original
 test-original: build-original
-	cabal test postgresql-pure:test:original
+	cabal test -j postgresql-pure:test:original
 
 .PHONY: build-hdbc-postgresql
 build-hdbc-postgresql: build
-	cabal build postgresql-pure:test:hdbc-postgresql
+	cabal build -j postgresql-pure:test:hdbc-postgresql
 
 .PHONY: test-hdbc-postgresql
 test-hdbc-postgresql: build-hdbc-postgresql
-	cabal test postgresql-pure:test:hdbc-postgresql
+	cabal test -j postgresql-pure:test:hdbc-postgresql
 
 .PHONY: build-relational-record
 build-relational-record: build
-	cabal build postgresql-pure:test:relational-record
+	cabal build -j postgresql-pure:test:relational-record
 
 .PHONY: test-relational-record
 test-relational-record: build-relational-record
-	cabal test postgresql-pure:test:relational-record
+	cabal test -j postgresql-pure:test:relational-record
 
 .PHONY: build-requests-per-second
 build-requests-per-second: build
-	cabal build postgresql-pure:bench:requests-per-second
+	cabal build -j postgresql-pure:bench:requests-per-second
 
 .PHONY: bench-requests-per-second
 bench-requests-per-second: build-requests-per-second
-	cabal bench postgresql-pure:bench:requests-per-second
+	cabal bench -j postgresql-pure:bench:requests-per-second
 
 .PHONY: build-requests-per-second-constant
 build-requests-per-second-constant: build
-	cabal build postgresql-pure:bench:requests-per-second-constant
+	cabal build -j postgresql-pure:bench:requests-per-second-constant
 
 .PHONY: bench-requests-per-second-constant
 bench-requests-per-second-constant: build-requests-per-second-constant
+	cabal bench -j postgresql-pure:bench:requests-per-second-constant
 
 .PHONY: init-test-asset
 init-test-asset:
