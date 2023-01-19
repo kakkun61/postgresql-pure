@@ -57,7 +57,11 @@ build-requests-per-second-constant: build
 
 .PHONY: bench-requests-per-second-constant
 bench-requests-per-second-constant: build-requests-per-second-constant
-	cabal bench postgresql-pure:bench:requests-per-second-constant
+
+.PHONY: init-test-asset
+init-test-asset:
+	psql -Upostgres -f test-asset/create-tables.sql
+	psql -Upostgres -f test-asset/insert.sql
 
 .PHONY: format
 format:
