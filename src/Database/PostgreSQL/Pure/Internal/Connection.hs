@@ -81,7 +81,6 @@ addrInfoHints :: NS.AddrInfo
 addrInfoHints =
   NS.defaultHints
     { NS.addrSocketType = NS.Stream
-    , NS.addrProtocol = 6 -- TCP
     , NS.addrFlags = [NS.AI_ADDRCONFIG]
     }
 
