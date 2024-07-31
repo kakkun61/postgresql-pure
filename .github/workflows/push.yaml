@@ -41,7 +41,7 @@ jobs:
           path: ${{ steps.setup.outputs.cabal-store }}
           key: ${{ env.key }}-plan-${{ hashFiles('**/plan.json') }}
           restore-keys: ${{ env.key }}-
-      - run: cabal build all --only-dependencies
+      - run: make build-deps
         # If we had an exact cache hit, the dependencies will be up to date.
         if: steps.cache.outputs.cache-hit != 'true'
       - uses: actions/cache/save@v4
@@ -50,5 +50,4 @@ jobs:
         with:
           path: ${{ steps.setup.outputs.cabal-store }}
           key: ${{ steps.cache.outputs.cache-primary-key }}
-      - run: make build-deps
       - run: make build
