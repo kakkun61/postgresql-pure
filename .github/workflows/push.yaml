@@ -9,17 +9,11 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
-        ghc: ['8.8', '8.10', '9.0']
+        ghc: ['8.8', '9.8', '9.10']
         exclude:
           - os: macos-latest
             ghc: '8.8'
-            # GHC 8.8 is only for OS X x86_64.
-          - os: macos-latest
-            ghc: '8.10'
-            # Incompatible LLVM version.
-          - os: macos-latest
-            ghc: '9.0'
-            # Incompatible LLVM version.
+            # GHC < 8.10 is only for OS X x86_64.
 
     runs-on: ${{ matrix.os }}
 
