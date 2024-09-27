@@ -5,6 +5,7 @@ stack.yaml
 *~
 *.local
 .ghc.environment.*
+.direnv/
 
 TAGS
 
