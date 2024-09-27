@@ -8,7 +8,7 @@ import           Data.Char                          (isDigit)
 import           Data.Either                        (fromRight)
 import           Data.Foldable                      (for_)
 import           Data.List                          (intercalate, intersperse, isPrefixOf, replicate, stripPrefix)
-import           Distribution.Simple                (Args, UserHooks (preBuild), defaultMainWithHooks, simpleUserHooks)
+import           Distribution.Simple                (Args, UserHooks (preBuild, buildHook), defaultMainWithHooks, simpleUserHooks)
 import           Distribution.Simple.Setup          (BuildFlags)
 import           Distribution.Types.HookedBuildInfo (HookedBuildInfo, emptyHookedBuildInfo)
 import           System.Directory                   (copyFile, createDirectoryIfMissing, getModificationTime,
@@ -17,12 +17,15 @@ import           System.FilePath                    (dropExtension, takeFileName
 import           System.IO                          (Handle, IOMode (ReadMode), hClose, hGetLine, hIsEOF, hPutStrLn,
                                                      hSetNewlineMode, noNewlineTranslation, openTempFile, stdin,
                                                      withFile)
+import Distribution.Extra.Doctest (addDoctestsUserHook)
 
 main :: IO ()
 main =
-  defaultMainWithHooks
-    simpleUserHooks
-      { preBuild = \_ _ -> preProcessBuilder >> preProcessParser >> preProcessLength >> pure emptyHookedBuildInfo }
+  defaultMainWithHooks $
+    addDoctestsUserHook "doctest"
+      simpleUserHooks
+        { preBuild = \_ _ -> preProcessBuilder >> preProcessParser >> preProcessLength >> pure emptyHookedBuildInfo
+        }
 
 preProcess :: FilePath -> (Word -> [String] -> [String]) -> IO ()
 preProcess srcPath embed = do

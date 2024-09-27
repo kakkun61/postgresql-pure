@@ -1,0 +1,35 @@
+name: build
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        ghc: ['8.8', '8.10', '9.0']
+        exclude:
+          # It takes too long time. Why?
+          - os: macos-latest
+            ghc: '8.10'
+
+    runs-on: ${{ matrix.os }}
+
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: haskell/actions/setup@v1
+        with:
+          ghc-version: ${{ matrix.ghc }}
+      - uses: actions/cache@v2
+        with:
+          path: |
+            $HOME/.cabal/packages
+            $HOME/.cabal/store
+          key: cabal-${{ runner.os }}-${{ matrix.ghc }}
+      - run: cabal update
+      - run: make build-deps
+      - run: make build

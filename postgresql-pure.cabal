@@ -29,6 +29,7 @@ source-repository head
 custom-setup
   setup-depends: Cabal,
                  base >= 4.12 && < 5,
+                 cabal-doctest,
                  directory,
                  filepath
 
@@ -116,6 +117,7 @@ test-suite doctest
   main-is: doctest.hs
   hs-source-dirs: test-doctest
   build-depends: doctest
+  x-doctest-components: lib
 
 test-suite hdbc-postgresql
   import: common
